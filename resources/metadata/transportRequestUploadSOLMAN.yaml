@@ -52,6 +52,19 @@ spec:
           - name: uploadCredentialsId
             type: secret
             param: password
+      - name: authentication
+        type: string
+        mandatory: false
+        description: "Parameter to change the Authentication Method (dafault: BASIC_AUTH)"
+        secret: true
+        default: "BASIC_AUTH"
+        scope: 
+          - PARAMETERS
+          - STAGES
+          - STEPS
+        values:
+          - "BASIC_AUTH"
+          - "OAUTH2"
       - name: applicationId
         type: string
         mandatory: true

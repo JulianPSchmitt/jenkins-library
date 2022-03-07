@@ -13,7 +13,8 @@ type Exec interface {
 
 // Connection Everything we need for connecting to CTS
 type Connection struct {
-	Endpoint string
-	User     string
-	Password string
+	Endpoint       string
+	User           string
+	Password       string
+	Authentication string
 }

@@ -2,9 +2,10 @@ package solman
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/SAP/jenkins-library/pkg/mock"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestSolmanUpload(t *testing.T) {
@@ -15,9 +16,10 @@ func TestSolmanUpload(t *testing.T) {
 	defaultUploadAction := UploadAction{}
 	defaultUploadAction.WithConnection(
 		Connection{
-			Endpoint: "https://example.org/solman",
-			User:     "me",
-			Password: "******",
+			Endpoint:       "https://example.org/solman",
+			User:           "me",
+			Password:       "******",
+			Authentication: "BASIC_AUTH",
 		})
 	defaultUploadAction.WithChangeDocumentID("123456")
 	defaultUploadAction.WithTransportRequestID("000K11111111")
@@ -50,7 +52,7 @@ func TestSolmanUpload(t *testing.T) {
 					"--endpoint", "https://example.org/solman",
 					"--user", "me",
 					"--password", "******",
-					"--backend-type", "SOLMAN",
+					"--authentication", "BASIC_AUTH",
 					"upload-file-to-transport",
 					"-cID", "123456",
 					"-tID", "000K11111111",
@@ -67,9 +69,10 @@ func TestSolmanUpload(t *testing.T) {
 		uploadAction := defaultUploadAction
 		uploadAction.WithConnection(
 			Connection{
-				Endpoint: "",
-				User:     "me",
-				Password: "******",
+				Endpoint:       "",
+				User:           "me",
+				Password:       "******",
+				Authentication: "BASIC_AUTH",
 			},
 		)
 		uploadAction.WithTransportRequestID("")

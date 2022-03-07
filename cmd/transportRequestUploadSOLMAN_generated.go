@@ -21,6 +21,7 @@ type transportRequestUploadSOLMANOptions struct {
 	Endpoint           string   `json:"endpoint,omitempty"`
 	Username           string   `json:"username,omitempty"`
 	Password           string   `json:"password,omitempty"`
+	Authentication     string   `json:"authentication,omitempty"`
 	ApplicationID      string   `json:"applicationId,omitempty"`
 	ChangeDocumentID   string   `json:"changeDocumentId,omitempty"`
 	TransportRequestID string   `json:"transportRequestId,omitempty"`
@@ -94,6 +95,7 @@ The application ID specifies how the file needs to be handled on server side.`,
 			}
 			log.RegisterSecret(stepConfig.Username)
 			log.RegisterSecret(stepConfig.Password)
+			log.RegisterSecret(stepConfig.Authentication)
 
 			if len(GeneralConfig.HookConfig.SentryConfig.Dsn) > 0 {
 				sentryHook := log.NewSentryHook(GeneralConfig.HookConfig.SentryConfig.Dsn, GeneralConfig.CorrelationID)
@@ -156,6 +158,7 @@ func addTransportRequestUploadSOLMANFlags(cmd *cobra.Command, stepConfig *transp
 	cmd.Flags().StringVar(&stepConfig.Endpoint, "endpoint", os.Getenv("PIPER_endpoint"), "Service endpoint")
 	cmd.Flags().StringVar(&stepConfig.Username, "username", os.Getenv("PIPER_username"), "Service user for uploading to the Solution Manager")
 	cmd.Flags().StringVar(&stepConfig.Password, "password", os.Getenv("PIPER_password"), "Service user password for uploading to the Solution Manager")
+	cmd.Flags().StringVar(&stepConfig.Authentication, "authentication", `BASIC_AUTH`, "Parameter to change the Authentication Method (dafault: BASIC_AUTH)")
 	cmd.Flags().StringVar(&stepConfig.ApplicationID, "applicationId", os.Getenv("PIPER_applicationId"), "Id of the application. Specifies how the file needs to be handled on server side")
 	cmd.Flags().StringVar(&stepConfig.ChangeDocumentID, "changeDocumentId", os.Getenv("PIPER_changeDocumentId"), "ID of the change document to which the file is uploaded")
 	cmd.Flags().StringVar(&stepConfig.TransportRequestID, "transportRequestId", os.Getenv("PIPER_transportRequestId"), "ID of the transport request to which the file is uploaded")
@@ -224,6 +227,15 @@ func transportRequestUploadSOLMANMetadata() config.StepData {
 						Mandatory: true,
 						Aliases:   []config.Alias{},
 						Default:   os.Getenv("PIPER_password"),
+					},
+					{
+						Name:        "authentication",
+						ResourceRef: []config.ResourceReference{},
+						Scope:       []string{"PARAMETERS", "STAGES", "STEPS"},
+						Type:        "string",
+						Mandatory:   false,
+						Aliases:     []config.Alias{},
+						Default:     `BASIC_AUTH`,
 					},
 					{
 						Name:        "applicationId",

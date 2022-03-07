@@ -2,10 +2,11 @@ package solman
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/SAP/jenkins-library/pkg/config/validation"
 	"github.com/SAP/jenkins-library/pkg/log"
 	"github.com/pkg/errors"
-	"strings"
 )
 
 // FileSystem interface collecting everything which is file system
@@ -103,7 +104,7 @@ func (a *UploadAction) Perform(fs FileSystem, command Exec) error {
 			"--endpoint", a.Connection.Endpoint,
 			"--user", a.Connection.User,
 			"--password", a.Connection.Password,
-			"--backend-type", "SOLMAN",
+			"--authentication", a.Connection.Authentication,
 			"upload-file-to-transport",
 			"-cID", a.ChangeDocumentID,
 			"-tID", a.TransportRequestID,

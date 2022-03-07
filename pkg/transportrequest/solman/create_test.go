@@ -3,18 +3,20 @@ package solman
 import (
 	"bytes"
 	"fmt"
+	"testing"
+
 	"github.com/SAP/jenkins-library/pkg/mock"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestSolmanCreateTransportRequest(t *testing.T) {
 
 	a := CreateAction{
 		Connection: Connection{
-			Endpoint: "https://example.org/solman",
-			User:     "me",
-			Password: "******",
+			Endpoint:       "https://example.org/solman",
+			User:           "me",
+			Password:       "******",
+			Authentication: "BASIC_AUTH",
 		},
 		ChangeDocumentID:    "123",
 		DevelopmentSystemID: "XXX~EXT_SRV",
@@ -36,7 +38,7 @@ func TestSolmanCreateTransportRequest(t *testing.T) {
 					"--endpoint", "https://example.org/solman",
 					"--user", "me",
 					"--password", "******",
-					"--backend-type", "SOLMAN",
+					"--authentication", "BASIC_AUTH",
 					"create-transport",
 					"-cID", "123",
 					"-dID", "XXX~EXT_SRV",

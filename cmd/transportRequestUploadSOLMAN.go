@@ -65,9 +65,10 @@ func runTransportRequestUploadSOLMAN(config *transportRequestUploadSOLMANOptions
 	commonPipelineEnvironment *transportRequestUploadSOLMANCommonPipelineEnvironment) error {
 
 	action.WithConnection(solman.Connection{
-		Endpoint: config.Endpoint,
-		User:     config.Username,
-		Password: config.Password,
+		Endpoint:       config.Endpoint,
+		User:           config.Username,
+		Password:       config.Password,
+		Authentication: config.Authentication,
 	})
 
 	action.WithTransportRequestID(config.TransportRequestID)

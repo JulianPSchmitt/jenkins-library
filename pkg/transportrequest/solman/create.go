@@ -3,11 +3,12 @@ package solman
 import (
 	"bytes"
 	"fmt"
+	"io"
+	"strings"
+
 	"github.com/SAP/jenkins-library/pkg/config/validation"
 	"github.com/SAP/jenkins-library/pkg/log"
 	"github.com/pkg/errors"
-	"io"
-	"strings"
 )
 
 // CreateAction Collects all the properties we need for creating a transport request
@@ -83,7 +84,7 @@ func (a *CreateAction) Perform(command Exec) (string, error) {
 			"--endpoint", a.Connection.Endpoint,
 			"--user", a.Connection.User,
 			"--password", a.Connection.Password,
-			"--backend-type", "SOLMAN",
+			"--authentication", a.Connection.Authentication,
 			"create-transport",
 			"-cID", a.ChangeDocumentID,
 			"-dID", a.DevelopmentSystemID,
